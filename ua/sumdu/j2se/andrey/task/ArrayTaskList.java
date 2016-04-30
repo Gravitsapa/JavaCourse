@@ -1,5 +1,6 @@
 package ua.sumdu.j2se.andrey.task;
 
+import java.util.Date;
 import java.util.Iterator;
 
 public class ArrayTaskList extends TaskList {
@@ -79,10 +80,11 @@ public class ArrayTaskList extends TaskList {
         return incomingTasks;
     }
 */
-    public ArrayTaskList incoming(int from, int to) {
+    public ArrayTaskList incoming(Date from, Date to) {
         ArrayTaskList incomingTasks = new ArrayTaskList();
         for (int i = 0; i < index; ++i) {
-            if (tasks[i].nextTimeAfter(from) != -1 && tasks[i].nextTimeAfter(from) <= to)
+            if (tasks[i].nextTimeAfter(from) != null &&
+                    tasks[i].nextTimeAfter(from).compareTo(to) < 0 || tasks[i].nextTimeAfter(from).compareTo(to) == 0)
                 incomingTasks.add(tasks[i]);
         }
         return incomingTasks;

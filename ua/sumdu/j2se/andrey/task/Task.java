@@ -1,26 +1,26 @@
 package ua.sumdu.j2se.andrey.task;
 
-import java.util.Objects;
+import java.util.Date;
 
 public class Task {
 
     private String title;
-    private int time;
-    private int start;
-    private int end;
-    private int interval;
+    private Date time;
+    private Date start;
+    private Date end;
+    private Date interval;
 
     private boolean active;
     private boolean repeated;
 
-    public Task(String title, int time) {
+    public Task(String title, Date time) {
         this.title = title;
         this.time = time;
         active = false;
         repeated = false;
     }
 
-    public Task(String title, int start, int end, int interval) {
+    public Task(String title, Date start, Date end, Date interval) {
         this.title = title;
         this.start = start;
         this.end = end;
@@ -45,37 +45,37 @@ public class Task {
         this.active = active;
     }
 
-    public int getTime() {
+    public Date getTime() {
         return !repeated ? time : start;
     }
 
-    public void setTime(int time) {
-        if(time < 0)
+    public void setTime(Date time) {
+        if(time.before(new Date(0)))
             throw new IllegalArgumentException("Time must be greater than 0");
 
         this.time = time;
         if(repeated) {
-            start = 0;
-            end = 0;
-            interval = 0;
+            start = null;
+            end = null;
+            interval = null;
             repeated = false;
         }
     }
 
-    public int getStartTime() {
+    public Date getStartTime() {
         return repeated ? start : time;
     }
 
-    public int getEndTime() {
+    public Date getEndTime() {
         return repeated ? end : time;
     }
 
-    public int getRepeatInterval() {
-        return repeated ? interval : 0;
+    public Date getRepeatInterval() {
+        return repeated ? interval : new Date(0);
     }
 
-    public void setTime(int start, int end, int interval) {
-        if(time < 0 || end < 0 || interval < 0)
+    public void setTime(Date start, Date end, Date interval) {
+        if(start.before(new Date(0)) || end.before(new Date(0)) || interval.before(new Date(0)))
             throw new IllegalArgumentException("Value must be greater than 0");
 
         this.start = start;
@@ -88,54 +88,50 @@ public class Task {
         return repeated;
     }
 
-    public int nextTimeAfter(int current) {
-        if(current < 0)
+    public Date nextTimeAfter(Date current) {
+        if(current.before(new Date(0)))
             throw new IllegalArgumentException("Current time must be greater than 0");
 
-        if (current > getEndTime() || !isActive())
-            return -1;
-        else if (current <= getStartTime())
+        if (current.after(getEndTime()) || !isActive())
+            return null;
+        else if (current.before(getStartTime()) || current.equals(getEndTime()))
             return getStartTime();
         else {
-            int tmp = getStartTime();
-            for (; tmp < getEndTime(); tmp += interval) {
-                if (tmp > current)
+            Date tmp = getStartTime();
+            for (; tmp.before(getEndTime()); tmp.setTime(tmp.getTime() + interval.getTime())) {
+                if (tmp.after(current))
                     break;
             }
             return tmp;
         }
-
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(this == obj)
-            return true;
-        if(obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Task task = (Task) obj;
-        if (time != task.time)
-            return false;
-        if (!Objects.equals(title, task.title) || start != task.start || end != task.end)
-            return false;
-        if (active != task.active || repeated != task.repeated || interval != task.interval)
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        if (active != task.active) return false;
+        if (repeated != task.repeated) return false;
+        if (title != null ? !title.equals(task.title) : task.title != null) return false;
+        if (time != null ? !time.equals(task.time) : task.time != null) return false;
+        if (start != null ? !start.equals(task.start) : task.start != null) return false;
+        if (end != null ? !end.equals(task.end) : task.end != null) return false;
+        return interval != null ? interval.equals(task.interval) : task.interval == null;
+
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result+ ((title == null) ? 0 : title.hashCode());
-        result = prime * result + (active ? 1231 : 1237);
-        result = prime * result + (repeated ? 1231 : 1237);
-        result = prime * result + time;
-        result = prime * result + start;
-        result = prime * result + end;
-        result = prime * result + interval;
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (start != null ? start.hashCode() : 0);
+        result = 31 * result + (end != null ? end.hashCode() : 0);
+        result = 31 * result + (interval != null ? interval.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (repeated ? 1 : 0);
         return result;
     }
 

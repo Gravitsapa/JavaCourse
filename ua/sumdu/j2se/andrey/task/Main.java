@@ -1,6 +1,7 @@
 package ua.sumdu.j2se.andrey.task;
 
 import javax.swing.*;
+import java.util.Date;
 import java.util.Iterator;
 
 public class Main {
@@ -15,19 +16,22 @@ public class Main {
 //
 //        frame.setVisible(true);
 
-        Task task1 = new Task("task1", 2);
-        Task task2 = new Task("task2", 2);
-        Task task3 = new Task("task3", 2);
-        Task task4 = new Task("task4", 2);
-        Task task5 = new Task("task5", 2);
-        Task task6 = new Task("task6", 2);
-        Task task7 = new Task("task7", 2);
-        Task task8 = new Task("task8", 2);
-        Task task9 = new Task("task9", 2);
-        Task task10 = new Task("task10", 2);
+        Task task1 = new Task("task1", new Date(393939393));
+        Task task2 = new Task("task2", new Date(393939393));
+        Task task3 = new Task("task3", new Date(393939393));
+        Task task4 = new Task("task4", new Date(393939393));
+        Task task5 = new Task("task5", new Date(393939393));
+        Task task6 = new Task("task6", new Date(393939393));
+        Task task7 = new Task("task7", new Date(393939393));
+        Task task8 = new Task("task8", new Date(393939393));
+        Task task9 = new Task("task9", new Date(393939393));
+        Task task10 = new Task("task10", new Date(393939393));
         //task1.setTime(-1);
 
+        Date er = new Date(488484040);
+        Date re = new Date(488484040);
 
+        er.setTime(er.getTime() + re.getTime());
 
         LinkedTaskList list = new LinkedTaskList();
         LinkedTaskList list2 = new LinkedTaskList();

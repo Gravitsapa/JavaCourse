@@ -1,5 +1,6 @@
 package ua.sumdu.j2se.andrey.task;
 
+import java.util.Date;
 import java.util.Iterator;
 
 public class LinkedTaskList extends TaskList {
@@ -71,10 +72,11 @@ public class LinkedTaskList extends TaskList {
         return size;
     }
 
-    public LinkedTaskList incoming(int from, int to) {
+    public LinkedTaskList incoming(Date from, Date to) {
         LinkedTaskList incomingTasks = new LinkedTaskList();
         for (int i = 0; i < size(); ++i) {
-            if (getTask(i).nextTimeAfter(from) != -1 && getTask(i).nextTimeAfter(from) <= to)
+            if (getTask(i).nextTimeAfter(from) != null &&
+                    getTask(i).nextTimeAfter(from).compareTo(to) < 0 || getTask(i).nextTimeAfter(from).compareTo(to) == 0)
                 incomingTasks.add(getTask(i));
         }
         return incomingTasks;
