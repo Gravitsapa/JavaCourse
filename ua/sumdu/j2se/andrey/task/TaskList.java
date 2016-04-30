@@ -35,12 +35,17 @@ public abstract class TaskList implements Iterable<Task> {
 
             @Override
             public boolean hasNext() {
-                return size() < tmp && getTask(tmp) != null;
+                return size() > tmp && getTask(tmp) != null;
             }
 
             @Override
             public Task next() {
                 return getTask(tmp++);
+            }
+
+            @Override
+            public void remove(){
+                TaskList.this.remove(getTask(tmp));
             }
         };
     }
