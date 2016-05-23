@@ -28,10 +28,6 @@ public class Main {
         Task task10 = new Task("task10", new Date(393939393));
         //task1.setTime(-1);
 
-        Date er = new Date(488484040);
-        Date re = new Date(488484040);
-
-        er.setTime(er.getTime() + re.getTime());
 
         LinkedTaskList list = new LinkedTaskList();
         LinkedTaskList list2 = new LinkedTaskList();

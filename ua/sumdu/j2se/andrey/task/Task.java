@@ -71,7 +71,7 @@ public class Task {
     }
 
     public Date getRepeatInterval() {
-        return repeated ? interval : new Date(0);
+        return repeated ? interval : null;
     }
 
     public void setTime(Date start, Date end, Date interval) {

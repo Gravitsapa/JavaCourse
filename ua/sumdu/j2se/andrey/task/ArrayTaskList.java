@@ -80,15 +80,15 @@ public class ArrayTaskList extends TaskList {
         return incomingTasks;
     }
 */
-    public ArrayTaskList incoming(Date from, Date to) {
-        ArrayTaskList incomingTasks = new ArrayTaskList();
-        for (int i = 0; i < index; ++i) {
-            if (tasks[i].nextTimeAfter(from) != null &&
-                    tasks[i].nextTimeAfter(from).compareTo(to) < 0 || tasks[i].nextTimeAfter(from).compareTo(to) == 0)
-                incomingTasks.add(tasks[i]);
-        }
-        return incomingTasks;
-    }
+//    public ArrayTaskList incoming(Date from, Date to) {
+//        ArrayTaskList incomingTasks = new ArrayTaskList();
+//        for (int i = 0; i < index; ++i) {
+//            if (tasks[i].nextTimeAfter(from) != null &&
+//                    tasks[i].nextTimeAfter(from).compareTo(to) < 0 || tasks[i].nextTimeAfter(from).compareTo(to) == 0)
+//                incomingTasks.add(tasks[i]);
+//        }
+//        return incomingTasks;
+//    }
 
     @Override
     public ArrayTaskList clone(){
