@@ -1,14 +1,16 @@
 package ua.sumdu.j2se.andrey.task;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Task {
+public class Task implements Serializable {
 
     private String title;
     private Date time;
     private Date start;
     private Date end;
-    private Date interval;
+    private int interval;
 
     private boolean active;
     private boolean repeated;
@@ -20,7 +22,7 @@ public class Task {
         repeated = false;
     }
 
-    public Task(String title, Date start, Date end, Date interval) {
+    public Task(String title, Date start, Date end, int interval) {
         this.title = title;
         this.start = start;
         this.end = end;
@@ -57,7 +59,7 @@ public class Task {
         if(repeated) {
             start = null;
             end = null;
-            interval = null;
+            interval = 0;
             repeated = false;
         }
     }
@@ -70,12 +72,12 @@ public class Task {
         return repeated ? end : time;
     }
 
-    public Date getRepeatInterval() {
-        return repeated ? interval : null;
+    public int getRepeatInterval() {
+        return repeated ? interval : 0;
     }
 
-    public void setTime(Date start, Date end, Date interval) {
-        if(start.before(new Date(0)) || end.before(new Date(0)) || interval.before(new Date(0)))
+    public void setTime(Date start, Date end, int interval) {
+        if(start.before(new Date(0)) || end.before(new Date(0)) || interval<0)
             throw new IllegalArgumentException("Value must be greater than 0");
 
         this.start = start;
@@ -98,7 +100,7 @@ public class Task {
             return getStartTime();
         else {
             Date tmp = getStartTime();
-            for (; tmp.before(getEndTime()); tmp.setTime(tmp.getTime() + interval.getTime())) {
+            for (; tmp.before(getEndTime()); tmp.setTime(tmp.getTime() + interval*1000)) {
                 if (tmp.after(current))
                     break;
             }
@@ -113,13 +115,13 @@ public class Task {
 
         Task task = (Task) o;
 
+        if (interval != task.interval) return false;
         if (active != task.active) return false;
         if (repeated != task.repeated) return false;
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (time != null ? !time.equals(task.time) : task.time != null) return false;
         if (start != null ? !start.equals(task.start) : task.start != null) return false;
-        if (end != null ? !end.equals(task.end) : task.end != null) return false;
-        return interval != null ? interval.equals(task.interval) : task.interval == null;
+        return end != null ? end.equals(task.end) : task.end == null;
 
     }
 
@@ -129,7 +131,7 @@ public class Task {
         result = 31 * result + (time != null ? time.hashCode() : 0);
         result = 31 * result + (start != null ? start.hashCode() : 0);
         result = 31 * result + (end != null ? end.hashCode() : 0);
-        result = 31 * result + (interval != null ? interval.hashCode() : 0);
+        result = 31 * result + interval;
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (repeated ? 1 : 0);
         return result;
@@ -137,13 +139,17 @@ public class Task {
 
     @Override
     public String toString(){
+        SimpleDateFormat ft = new SimpleDateFormat("'['yyyy-mm-dd hh:mm:ss.SSS']'");
+
         String repeated;
         if(isRepeated())
-            repeated = ", Start: " + this.start + ", End: " + this.end + ", Interval: " + this.interval;
+            repeated = " from " + ft.format(this.start) + " to " + ft.format(this.end) + " every " + this.interval;
         else
-            repeated = ", Time: " + this.time;
-
-        return "Name: " + this.title + repeated;
+            repeated = " at " + ft.format(time);
+        String active = "";
+        if(!isActive())
+            active = " inactive";
+        return "\"" + this.title+"\"" + repeated+active;
     }
 
     @Override

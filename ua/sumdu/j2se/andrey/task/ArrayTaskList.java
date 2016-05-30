@@ -65,31 +65,6 @@ public class ArrayTaskList extends TaskList {
         return tasks[index];
     }
 
-//TODO FIX incoming method
-
-/*
-    public Task[] incoming(int from, int to) {
-        Task[] incomingTasks = new Task[index];
-        int incomingIndex = 0;
-        for (int i = 0; i < index; ++i) {
-            if (tasks[i].getStartTime() >= from && tasks[i].getEndTime() <= to) {
-                incomingTasks[incomingIndex] = tasks[i];
-                incomingIndex++;
-            }
-        }
-        return incomingTasks;
-    }
-*/
-//    public ArrayTaskList incoming(Date from, Date to) {
-//        ArrayTaskList incomingTasks = new ArrayTaskList();
-//        for (int i = 0; i < index; ++i) {
-//            if (tasks[i].nextTimeAfter(from) != null &&
-//                    tasks[i].nextTimeAfter(from).compareTo(to) < 0 || tasks[i].nextTimeAfter(from).compareTo(to) == 0)
-//                incomingTasks.add(tasks[i]);
-//        }
-//        return incomingTasks;
-//    }
-
     @Override
     public ArrayTaskList clone(){
         ArrayTaskList out = null;

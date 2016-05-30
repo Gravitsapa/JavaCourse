@@ -12,16 +12,6 @@ public class Tasks {
 //        if(start < 0 || end < 0 || start > end)
 //            throw new IllegalArgumentException("Invalid value(s)");
 
-        //Task[] incomingTasks = new Task[size()];
-
-//        int incomingIndex = 0;
-//        for (int i = 0; i < size(); ++i) {
-//            if (getTask(i).getStartTime() >= from && getTask(i).getEndTime() <= to) {
-//                incomingTasks[incomingIndex++] = getTask(i);
-//                //incomingIndex++;
-//            }
-//        }
-//        return incomingTasks;
         ArrayTaskList incomingTasks = new ArrayTaskList();
         for (Task task: tasks) {
             if(!task.getStartTime().before(start) && !task.getEndTime().after(end))
@@ -36,7 +26,7 @@ public class Tasks {
         Iterable<Task> inc = incoming(tasks, start, end);
         for (Task task : inc) {
             Date tmp = task.nextTimeAfter(start);
-            while(tmp != null && tmp.compareTo(end) <= 0) {
+            while(tmp != null && tmp.after(end)) {
                 if (calendar.containsKey(tmp)) {
                     calendar.get(tmp).add(task);
                 } else {

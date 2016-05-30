@@ -72,16 +72,6 @@ public class LinkedTaskList extends TaskList {
         return size;
     }
 
-//    public LinkedTaskList incoming(Date from, Date to) {
-//        LinkedTaskList incomingTasks = new LinkedTaskList();
-//        for (int i = 0; i < size(); ++i) {
-//            if (getTask(i).nextTimeAfter(from) != null &&
-//                    getTask(i).nextTimeAfter(from).compareTo(to) < 0 || getTask(i).nextTimeAfter(from).compareTo(to) == 0)
-//                incomingTasks.add(getTask(i));
-//        }
-//        return incomingTasks;
-//    }
-
     @Override
     public LinkedTaskList clone(){
         LinkedTaskList out = null;
